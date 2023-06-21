@@ -1,3 +1,7 @@
+using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.Logging;
+using System.Text.Json;
+
 namespace Calculator
 {
     public partial class Form1 : Form
@@ -5,10 +9,18 @@ namespace Calculator
         double result = 0;
         string operation = "";
         bool isOperationComplited = false;
-            
+
+        private Logs logs = new Logs();
+
         public Form1()
         {
             InitializeComponent();
+
+            if (this.logs.ToString() != String.Empty)
+            {
+                if (File.Exists(this.logs.logsPath))
+                    LoadLogs();
+            }
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -40,7 +52,7 @@ namespace Calculator
                 button_equal.PerformClick();
                 operation = clickedButton.Text;
 
-                history_label.Text = result + " " + operation;
+                history_label.Text = $"{result} {operation}";
                 isOperationComplited = true;
 
             }
@@ -48,10 +60,32 @@ namespace Calculator
             {
                 operation = clickedButton.Text;
                 result = double.Parse(this.textBox_Result.Text);
-                history_label.Text = result + " " + operation;
+                history_label.Text = $"{result} {operation}";
+
                 isOperationComplited = true;
             }
             
+        }
+
+        private void AddHistory(string message)
+        {
+            History newLog = new History(message);
+
+            this.HistoryListBox.Items.Add(newLog);
+            logs.SaveToFile(newLog);
+        }
+
+        private void LoadLogs()
+        {
+            string json = File.ReadAllText(this.logs.logsPath);
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                this.logs.logs = JsonSerializer.Deserialize<List<History>>(json);
+
+                foreach (var log in this.logs.logs)
+                    this.HistoryListBox.Items.Add(log);
+            }
         }
 
         private void button_CE_Click(object sender, EventArgs e)
@@ -68,6 +102,7 @@ namespace Calculator
 
         private void button_equal_Click(object sender, EventArgs e)
         {
+            string before = this.textBox_Result.Text;
             switch (operation) 
             {
                 case "+":
@@ -86,9 +121,11 @@ namespace Calculator
                 default:
                     break;
             }
+            string historyText = $"{result} {operation} {before} = {this.textBox_Result.Text}";
 
             result = double.Parse(this.textBox_Result.Text);
             history_label.Text = " ";
+            AddHistory(historyText);
         }
 
     }

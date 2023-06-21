@@ -46,9 +46,9 @@
             this.button_comma = new System.Windows.Forms.Button();
             this.button0 = new System.Windows.Forms.Button();
             this.button_equal = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.history_label = new System.Windows.Forms.Label();
             this.textBox_Result = new System.Windows.Forms.TextBox();
+            this.HistoryListBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -230,14 +230,6 @@
             this.button_equal.UseVisualStyleBackColor = true;
             this.button_equal.Click += new System.EventHandler(this.button_equal_Click);
             // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(162, 170);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(221, 453);
-            this.richTextBox1.TabIndex = 20;
-            this.richTextBox1.Text = "";
-            // 
             // history_label
             // 
             this.history_label.AutoSize = true;
@@ -257,14 +249,23 @@
             this.textBox_Result.Text = "0";
             this.textBox_Result.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // HistoryListBox
+            // 
+            this.HistoryListBox.FormattingEnabled = true;
+            this.HistoryListBox.ItemHeight = 20;
+            this.HistoryListBox.Location = new System.Drawing.Point(167, 179);
+            this.HistoryListBox.Name = "HistoryListBox";
+            this.HistoryListBox.Size = new System.Drawing.Size(221, 444);
+            this.HistoryListBox.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(918, 661);
+            this.Controls.Add(this.HistoryListBox);
             this.Controls.Add(this.textBox_Result);
             this.Controls.Add(this.history_label);
-            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button_equal);
             this.Controls.Add(this.button0);
             this.Controls.Add(this.button_comma);
@@ -310,8 +311,8 @@
         private Button button_comma;
         private Button button0;
         private Button button_equal;
-        private RichTextBox richTextBox1;
         private Label history_label;
         private TextBox textBox_Result;
+        private ListBox HistoryListBox;
     }
 }
